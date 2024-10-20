@@ -16,7 +16,7 @@ jobs:
       paths: 'app/ui/'
 
   build:
-    name: Build and analyze
+    name: Build and Analyze
     needs: [check-paths]
     if: ${{ needs.check-paths.outputs.changes_detected == 'true' }}
     runs-on: ubuntu-latest
@@ -25,21 +25,33 @@ jobs:
     steps:
       - uses: actions/checkout@v4
         with:
-          fetch-depth: 0  # Shallow clones should be disabled for a better relevancy of analysis
-      - name: Cache SonarCloud packages
+          fetch-depth: 0  # Shallow clones should be disabled for better relevancy of analysis
+
+      - name: Cache SonarCloud Packages
         uses: actions/cache@v4
         with:
           path: ~/.sonar/cache
           key: ${{ runner.os }}-sonar
           restore-keys: ${{ runner.os }}-sonar
+
+      - name: Install Dependencies
+        working-directory: app/ui
+        run: flutter pub get
+
+      - name: Run Tests with Coverage
+        working-directory: app/ui
+        run: flutter test --coverage
+
       - name: Build
         working-directory: app/ui
         run: flutter build web
-      - name: Download sonar-scanner
+
+      - name: Download SonarScanner
         run: |
           curl --create-dirs -sSLo $HOME/.sonar/sonar-scanner.zip https://binaries.sonarsource.com/Distribution/sonar-scanner-cli/sonar-scanner-cli-6.2.1.4610-linux-x64.zip
           unzip -o $HOME/.sonar/sonar-scanner.zip -d $HOME/.sonar/
-      - name: Build and analyze
+
+      - name: Build and Analyze
         working-directory: app/ui
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}  # Needed to get PR information, if any
