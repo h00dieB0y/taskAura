@@ -20,9 +20,9 @@ class UserTest {
             User newUser = new User(userId, "user@example.com", "securePass", Role.ADMIN);
 
             assertEquals(userId, newUser.getId());
-            assertEquals("user@example.com", newUser.email());
-            assertEquals("securePass", newUser.password());
-            assertEquals(Role.ADMIN, newUser.role());
+            assertEquals("user@example.com", newUser.getEmail());
+            assertEquals("securePass", newUser.getPassword());
+            assertEquals(Role.ADMIN, newUser.getRole());
         }
 
         @Test
@@ -30,9 +30,9 @@ class UserTest {
             User createdUser = User.create("newuser@example.com", "newPassword", Role.USER);
 
             assertNotNull(createdUser.getId()); // Should have a non-null, random UUID
-            assertEquals("newuser@example.com", createdUser.email());
-            assertEquals("newPassword", createdUser.password());
-            assertEquals(Role.USER, createdUser.role());
+            assertEquals("newuser@example.com", createdUser.getEmail());
+            assertEquals("newPassword", createdUser.getPassword());
+            assertEquals(Role.USER, createdUser.getRole());
         }
     }
 
@@ -54,7 +54,7 @@ class UserTest {
                 String newEmail = "updated@example.com";
                 user.changeEmail(newEmail);
 
-                assertEquals(newEmail, user.email());
+                assertEquals(newEmail, user.getEmail());
             }
 
             @Test
@@ -72,7 +72,7 @@ class UserTest {
                 String newPassword = "newPassword123";
                 user.changePassword(newPassword);
 
-                assertEquals(newPassword, user.password());
+                assertEquals(newPassword, user.getPassword());
             }
 
             @Test
@@ -90,7 +90,7 @@ class UserTest {
                 Role newRole = Role.ADMIN;
                 user.changeRole(newRole);
 
-                assertEquals(newRole, user.role());
+                assertEquals(newRole, user.getRole());
             }
         }
 

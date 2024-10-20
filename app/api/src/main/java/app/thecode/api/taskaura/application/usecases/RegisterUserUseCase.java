@@ -23,7 +23,7 @@ public class RegisterUserUseCase {
     }
 
     public AuthenticationResponse execute(RegistrationRequest request) {
-        if (userRepository.findByEmail(request.userEmail()).isPresent()) {
+        if (userRepository.existsByEmail(request.userEmail())) {
             throw new UserAlreadyExistsException(request.userEmail());
         }
 
@@ -33,7 +33,7 @@ public class RegisterUserUseCase {
 
         return new AuthenticationResponse(
                 user.getId().toString(),
-                user.email(),
+                user.getEmail(),
                 "temporalAccessToken",
                 TokenType.BEARER
         );

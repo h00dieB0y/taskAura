@@ -1,5 +1,6 @@
 package app.thecode.api.taskaura.adapter.repositories;
 
+import app.thecode.api.taskaura.adapter.mappers.UserMapper;
 import app.thecode.api.taskaura.domain.entities.User;
 import app.thecode.api.taskaura.domain.interfaces.UserRepository;
 import app.thecode.api.taskaura.infrastructure.persistence.repositories.JpaUserRepository;
@@ -12,17 +13,26 @@ public class UserDAO implements UserRepository {
 
     private final JpaUserRepository jpaUserRepository;
 
-    public UserDAO(JpaUserRepository jpaUserRepository) {
+    private final UserMapper userMapper;
+
+    public UserDAO(JpaUserRepository jpaUserRepository, UserMapper userMapper) {
         this.jpaUserRepository = jpaUserRepository;
+        this.userMapper = userMapper;
     }
 
     @Override
     public Optional<User> save(User user) {
-        return Optional.empty();
+        return Optional.of(
+                userMapper.toDomain(
+                        jpaUserRepository.save(
+                                userMapper.toEntity(user)
+                        )
+                )
+        );
     }
 
     @Override
-    public Optional<User> findByEmail(String email) {
-        return Optional.empty();
+    public boolean existsByEmail(String email) {
+        return jpaUserRepository.existsByEmail(email);
     }
 }

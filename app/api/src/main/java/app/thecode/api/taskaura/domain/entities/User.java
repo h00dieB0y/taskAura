@@ -29,15 +29,15 @@ public class User {
         return this.id;
     }
 
-    public String email() {
+    public String getEmail() {
         return this.email;
     }
 
-    public String password() {
+    public String getPassword() {
         return this.password;
     }
 
-    public Role role() {
+    public Role getRole() {
         return this.role;
     }
 
