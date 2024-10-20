@@ -1,6 +1,6 @@
 package app.thecode.api.taskaura.application.validation.validators;
 
-import app.thecode.api.taskaura.application.dto.requests.RegistrationRequest;
+import app.thecode.api.taskaura.application.dto.requests.RegisterUserRequest;
 import app.thecode.api.taskaura.application.validation.annotations.PasswordMatches;
 import jakarta.validation.ConstraintValidator;
 import jakarta.validation.ConstraintValidatorContext;
@@ -14,7 +14,7 @@ public class PasswordMatchesValidator implements ConstraintValidator<PasswordMat
 
     @Override
     public boolean isValid(Object obj, ConstraintValidatorContext context) {
-        if (obj instanceof RegistrationRequest request) {
+        if (obj instanceof RegisterUserRequest request) {
             return request.userPassword().equals(request.userConfirmPassword());
         }
 

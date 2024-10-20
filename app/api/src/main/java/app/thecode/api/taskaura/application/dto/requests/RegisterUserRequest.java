@@ -5,7 +5,7 @@ import app.thecode.api.taskaura.application.validation.annotations.StrongPasswor
 import jakarta.validation.constraints.Email;
 
 @PasswordMatches
-public record RegistrationRequest(
+public record RegisterUserRequest(
         @Email(message = "email must be a valid email address")
         String userEmail,
         @StrongPassword

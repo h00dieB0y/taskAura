@@ -1,6 +1,6 @@
 package app.thecode.api.taskaura.application.usecases;
 
-import app.thecode.api.taskaura.application.dto.requests.RegistrationRequest;
+import app.thecode.api.taskaura.application.dto.requests.RegisterUserRequest;
 import app.thecode.api.taskaura.application.dto.responses.AuthenticationResponse;
 import app.thecode.api.taskaura.domain.interfaces.UserRepository;
 import app.thecode.api.taskaura.domain.UserAlreadyExistsException;
@@ -22,7 +22,7 @@ public class RegisterUserUseCase {
         this.passwordEncoder = passwordEncoder;
     }
 
-    public AuthenticationResponse execute(RegistrationRequest request) {
+    public AuthenticationResponse execute(RegisterUserRequest request) {
         if (userRepository.existsByEmail(request.userEmail())) {
             throw new UserAlreadyExistsException(request.userEmail());
         }
